@@ -33,12 +33,12 @@ A = fix(A);
 k = fix(k);
 
 if nargin < 3,
-	% allocate output memory and check size of argument
+	% allocate output memory and check size of argument
 	B = fix(A.*(2.^k));	% size of input arguments do not fit - if an error occurs in this line  
 
 	%B = fix(2.^(log2(A)+k));	% size of input arguments do not fit - if an error occurs in this line  
 else
-	% allocate output memory and check size of argument
+	% allocate output memory and check size of argument
 	B = rem(fix(A.*(2.^k)), 2^N);	% size of input arguments do not fit - if an error occurs in this line  
 
 	%B = fix(2.^(mod(log2(A)+k,N-)));	% size of input arguments do not fit - if an error occurs in this line  

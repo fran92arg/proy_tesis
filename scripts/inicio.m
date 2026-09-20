@@ -1,2 +1,2 @@
 clc,clear,close all
-eeglab(nogui);
+eeglab nogui
