@@ -1,0 +1,9 @@
+EEG-BIDS_testcases
+*.asv
+*~
+*.asv
+
+CLAUDE.md
+.DS_Store
+.context/
+.rules/
