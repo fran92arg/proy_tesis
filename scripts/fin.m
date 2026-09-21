@@ -1,0 +1,2 @@
+proj = currentProject;
+close(proj)
