@@ -3,11 +3,17 @@ clc
 close all
 %% rutas relativaas
 % scriptDir   = fileparts(mfilename('fullpath'));
-rutaScripts   = fileparts(mfilename('fullpath')); %me da la ruta actual del script que ejecuto
-raizProy = fileparts(rutaScripts); %subo un nivel de la carpeta que obtuve antes
-rutaData     = fullfile(projectRoot, 'data');
-rutaResult  = fullfile(projectRoot, 'results');
-eeglabRoot  = fullfile(projectRoot, 'eeglab');
+rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
+raizProy = fileparts(rutaScripts); % subo un nivel de la carpeta que obtuve antes
+rutaData     = fullfile(raizProy, 'data'); %T oma el valor que tenga la variable 
+% raizProy y le agrega 'data' como subcarpeta, uniendo ambas partes con el separador 
+% correcto (segun windows o linux)
+%SOLO FUNCIONAN AL CORRER CON F5
+%%
+rutaResult  = fullfile(raizProy, 'results');
+eeglabRoot  = fullfile(raizProy, 'eeglab');
+datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf 
+% en una estructura
 %% Cargar
 EEG = pop_biosig('...\data\LUI14071945017');
 EEG=eeg_checkset(EEG);%verificar consistencia de la estructura
