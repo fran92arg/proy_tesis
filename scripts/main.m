@@ -59,4 +59,3 @@ EEG=ICA(EEG)
 rutafiltrados= fullfile(raizProy,'Filtrados');
 aux=fullfile(rutafiltrados,datos.name);
 EEG=pop_writeeeg(EEG,aux,'TYPE','EDF');
-
