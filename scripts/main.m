@@ -14,11 +14,13 @@ rutaData     = fullfile(raizProy, 'data'); %Toma el valor que tenga la variable
 rutaResult  = fullfile(raizProy, 'results');
 eeglabRoot  = fullfile(raizProy, 'eeglab');
 datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf
-N=length(datos)
+N=length(datos);
+
 % en una estructura
-%% Cargar
+%% Cargar archivos de a uno
+for i=1:1 
 aux=strcat(rutaData,'\');
-aux=strcat(aux,datos.name);
+aux=strcat(aux,datos(i).name);
 EEG = pop_biosig(aux);
 EEG=eeg_checkset(EEG);%verificar consistencia de la estructura
 f_muestreo=EEG.srate;
@@ -58,5 +60,7 @@ EEG=notch(EEG);
 %% ICA
 EEG=ICA(EEG)
 rutafiltrados= fullfile(raizProy,'Filtrados');
-aux=fullfile(rutafiltrados,datos.name);
+aux=fullfile(rutafiltrados,datos(i).name);
 EEG=pop_writeeeg(EEG,aux,'TYPE','EDF');
+clear EEG;
+end

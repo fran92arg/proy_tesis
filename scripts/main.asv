@@ -13,9 +13,12 @@ rutaData     = fullfile(raizProy, 'data'); %Toma el valor que tenga la variable
 %%
 rutaResult  = fullfile(raizProy, 'results');
 eeglabRoot  = fullfile(raizProy, 'eeglab');
-datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf 
+datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf
+N=length(datos);
+
 % en una estructura
-%% Cargar
+%% Cargar archivos de a uno
+for 
 aux=strcat(rutaData,'\');
 aux=strcat(aux,datos.name);
 EEG = pop_biosig(aux);

@@ -7,7 +7,6 @@ EEG=pop_chanedit(EEG,'lookup','standard_1005.elc');
 %%
 EEG = pop_runica(EEG, 'icatype', 'runica','rndreset','off');
 %EEG=pop_saveset(EEG,'filename','Moreno_fastICA.set');
-EEG=eeg_checkset(EEG);
 EEG=pop_iclabel(EEG,'default'); %probabilidad de cada componente
 % pop_selectcomps(EEG,1:EEG.nbchan); %Mapas topograficos para ver que componente corresponde a c/artefacto
 categorias = {'Cerebro (Brain)', 'Músculo (Muscle)', 'Ojos (Eye)', 'Corazón (Heart)', 'Línea Eléctrica', 'Canal Malo', 'Ruido de Fondo'};
