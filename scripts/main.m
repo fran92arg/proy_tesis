@@ -1,6 +1,7 @@
 clear
 clc
 close all
+eeglab;
 %% rutas relativaas
 % scriptDir   = fileparts(mfilename('fullpath'));
 rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
@@ -55,6 +56,6 @@ EEG=notch(EEG);
 
 %% ICA
 EEG=ICA(EEG)
-rutafiltrados= fullfile(raizProy,'data');
-EEG=por_writeeeg(EEG,rutafiltrados,'TYPE','EDF');
+rutafiltrados= fullfile(raizProy,'Filtrados');
+EEG=pop_writeeeg(EEG,rutafiltrados,'EDF');
 
