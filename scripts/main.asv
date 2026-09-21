@@ -1,12 +1,12 @@
 clear
 clc
 close all
-eeglab;
+eeglab nogui;
 %% rutas relativaas
 % scriptDir   = fileparts(mfilename('fullpath'));
 rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
 raizProy = fileparts(rutaScripts); % subo un nivel de la carpeta que obtuve antes
-rutaData     = fullfile(raizProy, 'data'); %T oma el valor que tenga la variable 
+rutaData     = fullfile(raizProy, 'data'); %Toma el valor que tenga la variable 
 % raizProy y le agrega 'data' como subcarpeta, uniendo ambas partes con el separador 
 % correcto (segun windows o linux)
 %SOLO FUNCIONAN AL CORRER CON F5
@@ -59,4 +59,3 @@ EEG=ICA(EEG)
 rutafiltrados= fullfile(raizProy,'Filtrados');
 aux=fullfile(rutafiltrados,datos.name);
 EEG=pop_writeeeg(EEG,aux,'TYPE','EDF');
-periodogram(eeg_filt_lp(1,:),[],1024,256)

@@ -1,19 +1,20 @@
 clear
 clc
 close all
-eeglab;
+eeglab nogui;
 %% rutas relativaas
 % scriptDir   = fileparts(mfilename('fullpath'));
 rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
 raizProy = fileparts(rutaScripts); % subo un nivel de la carpeta que obtuve antes
-rutaData     = fullfile(raizProy, 'data'); %T oma el valor que tenga la variable 
+rutaData     = fullfile(raizProy, 'data'); %Toma el valor que tenga la variable 
 % raizProy y le agrega 'data' como subcarpeta, uniendo ambas partes con el separador 
 % correcto (segun windows o linux)
 %SOLO FUNCIONAN AL CORRER CON F5
 %%
 rutaResult  = fullfile(raizProy, 'results');
 eeglabRoot  = fullfile(raizProy, 'eeglab');
-datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf 
+datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf
+N=length(datos)
 % en una estructura
 %% Cargar
 aux=strcat(rutaData,'\');
