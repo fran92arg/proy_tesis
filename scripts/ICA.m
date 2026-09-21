@@ -79,8 +79,9 @@ for i = 1:nComp
 end
 
 EEG = pop_subcomp(EEG, rechazar, 0);
+EEG=eeg_checkset(EEG);
 % 
-EEG = pop_saveset(EEG, 'filename','Moreno_ICA_limpio.set','filepath','C:\tesis\filtrados\');
- eegplot(EEG.data,'srate',EEG.srate,'title','azul:original/Rojo:Sin ojos');
+%EEG = pop_saveset(EEG, 'filename','Moreno_ICA_limpio.set','filepath','C:\tesis\filtrados\');
+% eegplot(EEG.data,'srate',EEG.srate,'title','azul:original/Rojo:Sin ojos');
 %% 
 % plot(EEG.times,EEG.componentes(1).tiempo)
