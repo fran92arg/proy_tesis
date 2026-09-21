@@ -57,5 +57,5 @@ EEG=notch(EEG);
 %% ICA
 EEG=ICA(EEG)
 rutafiltrados= fullfile(raizProy,'Filtrados');
-EEG=pop_writeeeg(EEG,rutafiltrados,'EDF');
+% EEG=pop_writeeeg(EEG,rutafiltrados,'TIPE','EDF');
 
