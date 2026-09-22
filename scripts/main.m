@@ -1,7 +1,7 @@
 clear
 clc
 close all
-eeglab;
+eeglab nogui;
 %% rutas relativaas
 % scriptDir   = fileparts(mfilename('fullpath'));
 rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
@@ -55,7 +55,22 @@ EEG=notch(EEG);
 % periodogram(eeg_filt_lp(1,:),[],1024,256)
 
 %% ICA
-EEG=ICA(EEG)
+EEG=ICA(EEG);
+%%
+% Define full output path (ensure folder exists)
+aux=strcat('f_',datos.name);
 rutafiltrados= fullfile(raizProy,'Filtrados');
-aux=fullfile(rutafiltrados,datos.name);
-EEG=pop_writeeeg(EEG,aux,'TYPE','EDF');
+% outputFile = fullfile('C:\EEGData\Exports', 'my_exported_data.bdf');
+outputFile = fullfile(rutafiltrados, aux);
+% Save EEG to BDF format using pop_writeeeg
+try
+    pop_writeeeg(EEG, outputFile, 'TYPE', 'BDF'); 
+    fprintf('EEG successfully saved to: %s\n', outputFile);
+catch ME
+    fprintf('Error saving EEG: %s\n', ME.message);
+end
+% rutafiltrados= fullfile(raizProy,'Filtrados');
+% aux=strcat('_f',datos.name)
+%aux=fullfile(rutafiltrados,datos.name);
+% EEG=pop_writeeeg(EEG,'filtrados','TYPE','EDF');
+% pop_writeeeg(EEG)
