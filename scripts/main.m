@@ -3,7 +3,6 @@ clc
 close all
 eeglab nogui;
 %% rutas relativas del proyecto
-% scriptDir   = fileparts(mfilename('fullpath'));
 rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
 raizProy = fileparts(rutaScripts); % subo un nivel de la carpeta que obtuve antes
 rutaData     = fullfile(raizProy, 'data'); %T oma el valor que tenga la variable 
@@ -15,7 +14,8 @@ rutaResult  = fullfile(raizProy, 'results');
 eeglabRoot  = fullfile(raizProy, 'eeglab');
 datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf 
 % en una estructura
-N=length(datos);
+% N=length(datos);
+N=1;
 %% Cargar los .edf
 for i=1:N
     aux=strcat(rutaData,'\');
@@ -25,13 +25,13 @@ for i=1:N
     f_muestreo=EEG.srate;
     %% butterworth pasaalto
     EEG=pasaalto(EEG);
-    
+    EEG=eeg_checkset(EEG);%verificar consistencia de la estructura
     %% butterworth Pasabajos
     EEG=pasabajo(EEG);
-    
+    EEG=eeg_checkset(EEG);%verificar consistencia de la estructura
     %% Filtro notch 50Hz
     EEG=notch(EEG);
-    
+    EEG=eeg_checkset(EEG);%verificar consistencia de la estructura
     % %% Cleanline
     % EEG = pop_cleanline(EEG, 'bandwidth', 1, ...
     %     'chanlist', 1, ... %canales EEG, excluyendo el EKG
@@ -57,15 +57,16 @@ for i=1:N
     % periodogram(eeg_filt_lp(1,:),[],1024,256)
     
     %% ICA
-    try
-        EEG=ICA(EEG); 
-        fprintf('Anda ica');
-    catch ME
-        fprintf('Error ICA: %s\n', ME.message);
-    end
-    
+    EEG=ICA(EEG); 
+%     try
+%         EEG=ICA(EEG); 
+%         fprintf('Anda ica');
+%     catch ME
+%         fprintf('Error ICA: %s\n', ME.message);
+%     end
+%     
     %%
-    % Define full output path (ensure folder exists)
+    % agrega _f antes del nombre al nuevo archivo filtrado
     aux=strcat('f_',datos(i).name);
     rutafiltrados= fullfile(raizProy,'Filtrados');
     % outputFile = fullfile('C:\EEGData\Exports', 'my_exported_data.bdf');
@@ -73,9 +74,9 @@ for i=1:N
     % Save EEG to BDF format using pop_writeeeg
     try
         pop_writeeeg(EEG, outputFile, 'TYPE', 'BDF'); 
-        fprintf('EEG successfully saved to: %s\n', outputFile);
+        fprintf('EEG filtrado guardado con éxito en: %s\n', outputFile);
     catch ME
-        fprintf('Error saving EEG: %s\n', ME.message);
+        fprintf('Error al guardar EEG: %s\n', ME.message);
     end
     % rutafiltrados= fullfile(raizProy,'Filtrados');
     % aux=strcat('_f',datos.name)
