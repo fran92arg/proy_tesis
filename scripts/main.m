@@ -83,4 +83,9 @@ for i=1:N
     %aux=fullfile(rutafiltrados,datos.name);
     % EEG=pop_writeeeg(EEG,'filtrados','TYPE','EDF');
     % pop_writeeeg(EEG)
+
+    %% 
+    aux
+    [pico_amp, snr_valor]=evocados(EEG,40,5)
 end
+%% PEV
