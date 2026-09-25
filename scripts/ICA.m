@@ -54,11 +54,11 @@ for f = 1:nFiguras
         [prob, idx] = max(EEG.etc.ic_classification.ICLabel.classifications(i,:));
 
         posSubplot = i - inicio + 1;
-        ax = subplot(filas, columnas, posSubplot);
-        plot(ax, EEG.times/1000, EEG.icaact(i,:)); % tiempo en segundos
-        title(ax, sprintf('IC%d: %s (%.0f%%)', i, categorias{idx}, prob*100), 'FontSize', 8);
-        xlabel(ax, 'segundos');
-        xlim(ax, [0, ventana]); % ventana inicial: primeros 10 s
+%         ax = subplot(filas, columnas, posSubplot);
+%         plot(ax, EEG.times/1000, EEG.icaact(i,:)); % tiempo en segundos
+%         title(ax, sprintf('IC%d: %s (%.0f%%)', i, categorias{idx}, prob*100), 'FontSize', 8);
+%         xlabel(ax, 'segundos');
+%         xlim(ax, [0, ventana]); % ventana inicial: primeros 10 s
 
         ejes(posSubplot) = ax;
     end

@@ -14,10 +14,9 @@ rutaResult  = fullfile(raizProy, 'results');
 eeglabRoot  = fullfile(raizProy, 'eeglab');
 datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf 
 % en una estructura
-% N=length(datos);
-N=1;
+N=length(datos);
 %% Cargar los .edf
-for i=1:N
+for i=1:1
     aux=strcat(rutaData,'\');
     aux=strcat(aux,datos(i).name);
     EEG = pop_biosig(aux);
