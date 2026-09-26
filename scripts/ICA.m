@@ -3,12 +3,13 @@ function EEG=ICA(EEG)
 % clc
 % EEG_orig = pop_loadset('filename','moreno_filtradonotch.set','filepath','C:\tesis\filtrados\'); %xq pop_biosig no abre .set
 % EEG=EEG_orig;
-% EEG = pop_select(EEG, 'nochannel', {'EKG'}); % o el índice/nombre real del canal 22
+EEG = pop_select(EEG, 'nochannel', {'EKG'}); % o el índice/nombre real del canal 22
 dipfitPath = fileparts(which('pop_multifit'));
 elcFile = fullfile(dipfitPath, 'standard_BEM', 'elec', 'standard_1020.elc');
 % EEG = pop_chanedit(EEG, 'lookup', elcFile);
 EEG=pop_chanedit(EEG,'lookup',elcFile);
-%%
+{EEG.chanlocs.labels}
+%%aaaaaaaaa
 EEG = pop_runica(EEG, 'icatype', 'runica','rndreset','off');
 %EEG=pop_saveset(EEG,'filename','Moreno_fastICA.set');
 EEG=pop_iclabel(EEG,'default'); %probabilidad de cada componente
