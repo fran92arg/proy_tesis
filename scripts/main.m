@@ -87,5 +87,5 @@ for i=1:N
     %% 
     aux
     [pico_amp, snr_valor]=evocados(EEG,40,5)
+   % [pico_amp2, snr_valor2]=evocados(EEG,40,14)
 end
-%% PEV

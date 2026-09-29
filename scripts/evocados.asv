@@ -6,15 +6,14 @@ function [pico_amp, snr_valor] = evocados(EEG, freq_objetivo, canal_idx) %01=ind
     
     % Calcular FFT
     Y = fft(senal);
-        P2 = abs(Y/Largo);
+    figure();
+    periodogram(senal,rectwin(Largo),1024,Fs);
+    title('Periodograma fft');
+
+    P2 = abs(Y/Largo);
     P1 = P2(1:Largo/2+1);
     P1(2:end-1) = 2*P1(2:end-1);
     f = Fs*(0:(Largo/2))/Largo;
-    figure();
-    %periodogram(senal,rectwin(Largo),1024,Fs);
-    %title('Periodograma fft');
-    plot(f,P1)
-    title('FFT unilateral');
     
     % 1. Encontrar el índice de la frecuencia objetivo
     [~, idx_freq] = min(abs(f - freq_objetivo)); % ~ para que no muestre el valor minimo, solo la posición
