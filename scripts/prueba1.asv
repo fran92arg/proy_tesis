@@ -25,6 +25,12 @@ end
 % Señal de eventos
 sig = zeros(1, N);
 sig(idx) = cod;
+%%
+for i=1:8500
+    
+end
+
+%%
 
 % Gráfico
 eventos2=reshape(sig,[ventana,length(sig)/ventana]);
