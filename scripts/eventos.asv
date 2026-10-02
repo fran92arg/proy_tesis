@@ -1,15 +1,7 @@
-function signal=eventos(EEG)
-%function EEG=prueba1(EEG)
-ventana=1024;
-Ncols=length(EEG.times)/ventana;
-matriz=zeros(ventana,Ncols);
-matriz=reshape(EEG.data(5,:),ventana,Ncols);
-Fs=EEG.srate;
-size(matriz)
-Y=fft(matriz);
-f=Fs/ventana*(0:ventana/2);
+% function signal=eventos(EEG)
 N     = size(EEG.data, 2);
-t     = (0:N-1) / EEG.srate;            % eje de tiempo en segundos
+% t     = (0:N-1) / EEG.srate;            % eje de tiempo en segundos
+t=EEG.times;
 
 % Eventos (sin boundary)
 tipos = {EEG.event.type};
@@ -26,4 +18,19 @@ end
 % Señal de eventos
 sig = zeros(1, N);
 sig(idx) = cod;
+
+% Gráfico
+figure;
+plot(t, sig, 'k');
+xlabel('Tiempo (s)');
+ylabel('Código de evento');
+title('Señal de eventos');
+grid on;
+%% end
+cant=0;
+for i=1:length(EEG.times)
+    if(sig(i)>2000)
+        cant=cant+1;
+    end
 end
+cant

@@ -9,12 +9,7 @@ end
 
 % Gráfico
 eventos2=reshape(sig,[ventana,length(sig)/ventana]);
-% figure;
-% plot(t, sig, 'k');
-% xlabel('Tiempo (s)');
-% ylabel('Código de evento');
-% title('Señal de eventos');
-% grid on;
+
 epoca=10
    % for i=1:4
        P2 = abs(Y(:,epoca)/ventana);
