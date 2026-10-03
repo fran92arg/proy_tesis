@@ -205,9 +205,9 @@ frecuencia_grupo_Hz = nan(cant_grupos, 1);             % NaN = sin frecuencia
 for g = 1:cant_grupos
 
     % El primer grupo debe ser el de inicio (1 pulso)
-%     if g == 1 && pulsos_por_grupo(g) ~= 1
-%         warning('El primer grupo tiene %d pulsos (se esperaba 1 = inicio).', pulsos_por_grupo(g));
-%     end
+    if g == 1 && pulsos_por_grupo(g) ~= 1
+        warning('El primer grupo tiene %d pulsos (se esperaba 1 = inicio).', pulsos_por_grupo(g));
+    end
 
     switch pulsos_por_grupo(g)
         case 1
