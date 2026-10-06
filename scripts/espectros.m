@@ -1,14 +1,11 @@
 
-function estructura=espectros(EEG)
+%function estructura=espectros(EEG)
 %   recibe el eeg filtrado y un arreglo con los indices de los canales
-for i=1:8500
-
-end
 
 %%
 
 % Gráfico
-eventos2=reshape(sig,[ventana,length(sig)/ventana]);
+eventos2=reshape(eventos_largo,[ventana,length(sig)/ventana]);
 
 epoca=10
    % for i=1:4
@@ -25,4 +22,4 @@ hold on
    % end
 
 %end
-end
+%end

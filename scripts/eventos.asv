@@ -205,9 +205,9 @@ frecuencia_grupo_Hz = nan(cant_grupos, 1);             % NaN = sin frecuencia
 for g = 1:cant_grupos
 
     % El primer grupo debe ser el de inicio (1 pulso)
-    if g == 1 && pulsos_por_grupo(g) ~= 1
-        warning('El primer grupo tiene %d pulsos (se esperaba 1 = inicio).', pulsos_por_grupo(g));
-    end
+%     if g == 1 && pulsos_por_grupo(g) ~= 1
+%         warning('El primer grupo tiene %d pulsos (se esperaba 1 = inicio).', pulsos_por_grupo(g));
+%     end
 
     switch pulsos_por_grupo(g)
         case 1
@@ -252,7 +252,7 @@ for i = 1:cant_tramos
 
     % Inicio del estímulo = último pulso del código (usar t_primer_pulso_grupo_s
     % si el estímulo arranca en el primer pulso del grupo)
-    t_inicio_estimulo_s = t_ultimo_pulso_grupo_s(g);
+    t_inicio_estimulo_s = t_primer_pulso_grupo_s(g);
 
     % Fin del estímulo = primer pulso del grupo siguiente (o fin del registro)
     if g < cant_grupos
@@ -264,8 +264,7 @@ for i = 1:cant_tramos
     muestra_inicial = round(t_inicio_estimulo_s * EEG.srate) + 1;
     muestra_final   = round(t_fin_estimulo_s    * EEG.srate) + 1;
 
-    tramos_muestras(i, :)     = [min(muestra_inicial, cant_muestras), ...
-                                 min(muestra_final,   cant_muestras)];
+    tramos_muestras(i, :)     = [min(muestra_inicial, cant_muestras),min(muestra_final,   cant_muestras)];
     frecuencia_tramo_Hz(i)    = frecuencia_grupo_Hz(g);
 end
 
@@ -293,3 +292,48 @@ stairs(tramos_muestras(:,1) / EEG.srate, frecuencia_tramo_Hz, 'LineWidth', 1.5);
 plot(tramos_muestras(:,1) / EEG.srate, frecuencia_tramo_Hz, 'ro');
 xlabel('Tiempo (s)'); ylabel('Frecuencia (Hz)');
 title('Frecuencia de estimulación'); grid on;
+%%
+%% --- Un solo impulso por grupo, con su etiqueta de frecuencia -------------
+cant_muestras = size(EEG.data, 2);                       % 76800
+
+% Qué pulso representa al grupo: primero o último (ajustar según el protocolo)
+t_evento_grupo_s = t_primer_pulso_grupo_s;               % o t_ultimo_pulso_grupo_s
+
+senal_evento_codigo = zeros(1, cant_muestras);           % valor = nº de pulsos del grupo (1..5)
+senal_evento_Hz     = zeros(1, cant_muestras);           % valor = frecuencia en Hz (0 = sin frecuencia)
+muestra_evento      = zeros(cant_grupos, 1);             % muestra donde cae cada grupo
+
+for g = 1:cant_grupos
+    muestra = round(t_evento_grupo_s(g) * EEG.srate) + 1;    % tiempo -> nº de muestra
+    muestra_evento(g) = muestra;
+
+    if muestra >= 1 && muestra <= cant_muestras
+        senal_evento_codigo(muestra) = pulsos_por_grupo(g);
+
+        if ~isnan(frecuencia_grupo_Hz(g))                    % el grupo de inicio no tiene frecuencia
+            senal_evento_Hz(muestra) = frecuencia_grupo_Hz(g);
+        end
+    end
+end
+
+% Tabla que conserva la etiqueta de texto de cada evento
+tabla_eventos = table((1:cant_grupos)', muestra_evento, t_evento_grupo_s(:), ...
+    pulsos_por_grupo(:), etiqueta_grupo, frecuencia_grupo_Hz, ...
+    'VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
+disp(tabla_eventos);
+%plot(EEG.times,tabla_eventos.frecuencia_Hz);
+plot(t_evento_grupo_s, frecuencia_grupo_Hz, 'o'); hold on;
+stairs(t_evento_grupo_s, frecuencia_grupo_Hz);
+figure(2);
+stem(tabla_eventos.tiempo_s,tabla_eventos.frecuencia_Hz);
+%%
+L=length(EEG.times);
+eventos_largo=zeros(1,L);
+% k=1;
+% for i=8326:L
+%     if i==tabla_eventos.muestra(k)
+%         eventos_largo(i)=tabla_eventos.frecuencia_Hz(k);
+%          k=k+1;
+%     end
+%end
+eventos_largo(tabla_eventos.muestra)=tabla_eventos.frecuencia_Hz;
