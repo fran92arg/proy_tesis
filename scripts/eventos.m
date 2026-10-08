@@ -337,3 +337,12 @@ eventos_largo=zeros(1,L);
 %     end
 %end
 eventos_largo(tabla_eventos.muestra)=tabla_eventos.frecuencia_Hz;
+
+hola=reshape(eventos_largo,[1024,76800/1024]);
+reseeg=reshape(EEG.times,[1024,76800/1024]);
+for i=31:33
+    figure(i);
+    stem(reseeg(:,i),hola(:,i));
+end
+
+%resta=tabla_eventos.muestra(i)
