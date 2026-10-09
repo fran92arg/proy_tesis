@@ -21,10 +21,10 @@ for i=1:EEG.nbchan
     % eeg_filt_ranura(i,:)=filter(num_ranura,den_ranura,double(eeg_filt_lp(i,:)));
     eeg_filt_ranura(i,:)=filter(Hd,double(EEG.data(i,:)));
 end
-figure(4)
-periodogram(eeg_filt_ranura(1,:),[],1024,256)
-hold on;
-periodogram(EEG.data(1,:),[],1024,256)
+% figure(4)
+% periodogram(eeg_filt_ranura(1,:),[],1024,256)
+% hold on;
+% periodogram(EEG.data(1,:),[],1024,256)
 EEG.data=eeg_filt_ranura;
 EEG=eeg_checkset(EEG);
 % [EOF]

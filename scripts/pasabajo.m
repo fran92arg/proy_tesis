@@ -19,10 +19,10 @@ Hd = design(h, 'butter');
 for i=1:EEG.nbchan
     eeg_filt_lp(i,:)=filter(Hd,double(EEG.data(i,:)));
 end
-figure(3);
-periodogram(EEG.data(5,:),[],1024,256)
-hold on;
-periodogram(eeg_filt_lp(5,:),[],1024,256)
+% figure(3);
+% periodogram(EEG.data(5,:),[],1024,256)
+% hold on;
+% periodogram(eeg_filt_lp(5,:),[],1024,256)
 EEG.data=eeg_filt_lp;
 EEG=eeg_checkset(EEG);
 
