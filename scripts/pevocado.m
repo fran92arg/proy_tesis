@@ -1,8 +1,9 @@
 classdef pevocado
    properties
        nombre=[];
-       s_eventos=[];
-       datos=struct('O1',[],'O2',[],'Pz',[],'P3',[],'P4',[]);
+       % eeg filtrado
+       EEG;%=double(zeros(size(EEG.data)))
+       tabla_eventos=table%('VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
    end
    methods
 %        function e=espectro(tipo)

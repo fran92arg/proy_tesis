@@ -30,45 +30,45 @@ for i = 1:nComp
 end
 % EEG = pop_subcomp(EEG, [1,5,17], 0);
 %%
-nComp = size(EEG.icaact, 1);
-
-compPorFigura = 12;
-columnas = 3;
-filas = ceil(compPorFigura / columnas);
-nFiguras = ceil(nComp / compPorFigura);
-
-ventana = 10; % segundos a mostrar
-tMax = EEG.times(end)/1000; % EEG.times está en ms, lo pasamos a segundos
-
-for f = 1:nFiguras
-    hFig = figure('Name', sprintf('Componentes ICA (%d/%d)', f, nFiguras), ...
-           'NumberTitle', 'off', ...
-           'Units','normalized', 'OuterPosition',[0 0 1 0.92]); % dejamos margen abajo para el slider
-
-    inicio = (f-1)*compPorFigura + 1;
-    fin = min(f*compPorFigura, nComp);
-
-    ejes = gobjects(fin-inicio+1, 1); % guardamos los handles de los ejes de esta figura
-
-    for i = inicio:fin
-        [prob, idx] = max(EEG.etc.ic_classification.ICLabel.classifications(i,:));
-
-        posSubplot = i - inicio + 1;
-        ax = subplot(filas, columnas, posSubplot);
-        plot(ax, EEG.times/1000, EEG.icaact(i,:)); % tiempo en segundos
-        title(ax, sprintf('IC%d: %s (%.0f%%)', i, categorias{idx}, prob*100), 'FontSize', 8);
-        xlabel(ax, 'segundos');
-        xlim(ax, [0, ventana]); % ventana inicial: primeros 10 s
-
-        ejes(posSubplot) = ax;
-    end
-
-    % Slider para desplazar la ventana temporal en TODOS los subplots de esta figura
-    uicontrol('Parent', hFig, 'Style', 'slider', ...
-        'Units','normalized', 'Position',[0.15 0.02 0.7 0.03], ...
-        'Min', 0, 'Max', max(tMax - ventana, 0.001), 'Value', 0, ...
-        'Callback', @(src, ~) arrayfun(@(a) xlim(a, [src.Value, src.Value+ventana]), ejes));
-end
+% nComp = size(EEG.icaact, 1);
+% 
+% compPorFigura = 12;
+% columnas = 3;
+% filas = ceil(compPorFigura / columnas);
+% nFiguras = ceil(nComp / compPorFigura);
+% 
+% ventana = 10; % segundos a mostrar
+% tMax = EEG.times(end)/1000; % EEG.times está en ms, lo pasamos a segundos
+% 
+% for f = 1:nFiguras
+%     hFig = figure('Name', sprintf('Componentes ICA (%d/%d)', f, nFiguras), ...
+%            'NumberTitle', 'off', ...
+%            'Units','normalized', 'OuterPosition',[0 0 1 0.92]); % dejamos margen abajo para el slider
+% 
+%     inicio = (f-1)*compPorFigura + 1;
+%     fin = min(f*compPorFigura, nComp);
+% 
+%     ejes = gobjects(fin-inicio+1, 1); % guardamos los handles de los ejes de esta figura
+% 
+%     for i = inicio:fin
+%         [prob, idx] = max(EEG.etc.ic_classification.ICLabel.classifications(i,:));
+% 
+%         posSubplot = i - inicio + 1;
+%         ax = subplot(filas, columnas, posSubplot);
+%         plot(ax, EEG.times/1000, EEG.icaact(i,:)); % tiempo en segundos
+%         title(ax, sprintf('IC%d: %s (%.0f%%)', i, categorias{idx}, prob*100), 'FontSize', 8);
+%         xlabel(ax, 'segundos');
+%         xlim(ax, [0, ventana]); % ventana inicial: primeros 10 s
+% 
+%         ejes(posSubplot) = ax;
+%     end
+% 
+%     % Slider para desplazar la ventana temporal en TODOS los subplots de esta figura
+%     uicontrol('Parent', hFig, 'Style', 'slider', ...
+%         'Units','normalized', 'Position',[0.15 0.02 0.7 0.03], ...
+%         'Min', 0, 'Max', max(tMax - ventana, 0.001), 'Value', 0, ...
+%         'Callback', @(src, ~) arrayfun(@(a) xlim(a, [src.Value, src.Value+ventana]), ejes));
+% end
 %%
 % pausa=input('Presione tecla');
 umbral = 0.8; % 80% de probabilidad

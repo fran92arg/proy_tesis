@@ -21,8 +21,8 @@ for i=1:EEG.nbchan
 end
 % [EOF]
 %figure()
-periodogram(EEG.data(5,:),[],1024,256)
- hold on;
-periodogram(eeg_filt_hp(5,:),[],1024,256)
+% periodogram(EEG.data(5,:),[],1024,256)
+%  hold on;
+% periodogram(eeg_filt_hp(5,:),[],1024,256)
 EEG.data=eeg_filt_hp;
 EEG=eeg_checkset(EEG);

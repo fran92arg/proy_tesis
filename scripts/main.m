@@ -2,10 +2,13 @@ clear
 clc
 close all
 eeglab nogui;
+% doble precision
+pop_editoptions('option_single', 0);
 %% rutas relativas del proyecto
 rutaScripts   = fileparts(mfilename('fullpath')); % me da la ruta actual del script que ejecuto
 raizProy = fileparts(rutaScripts); % subo un nivel de la carpeta que obtuve antes
 rutaData     = fullfile(raizProy, 'data'); %T oma el valor que tenga la variable 
+
 % raizProy y le agrega 'data' como subcarpeta, uniendo ambas partes con el separador 
 % correcto (segun windows o linux)
 %SOLO FUNCIONAN AL CORRER CON F5
@@ -14,10 +17,13 @@ rutaResult  = fullfile(raizProy, 'results');
 eeglabRoot  = fullfile(raizProy, 'eeglab');
 datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .edf 
 % en una estructura
- N=length(datos);
+cant_archivos=length(datos);
+%%
+obj(cant_archivos)=pevocado;
 %N=1;
 %% Cargar los .edf
-for i=1:N
+for i=1:cant_archivos
+    obj(i).nombre=datos(i).name(1:end-4);
     aux=strcat(rutaData,'\');
     aux=strcat(aux,datos(i).name);
     EEG = pop_biosig(aux);
@@ -32,40 +38,11 @@ for i=1:N
     %% Filtro notch 50Hz
     EEG=notch(EEG);
     EEG=eeg_checkset(EEG);%verificar consistencia de la estructura
-    % %% Cleanline
-    % EEG = pop_cleanline(EEG, 'bandwidth', 1, ...
-    %     'chanlist', 1, ... %canales EEG, excluyendo el EKG
-    %     'computepower', 1, ...
-    %     'linefreqs', [50 100], ... % o [50 100] para incluir el armónico
-    %     'normSpectrum', 0, ...
-    %     'p', 0.01, ...
-    %     'plotfigures', 0, ...
-    %     'scanforlines', 1, ...
-    %     'sigtype', 'Channels', ...
-    %     'tau', 100, ...
-    %     'verb', 1, ...
-    %     'winsize', 6, ...
-    %     'winstep', 1);
-    % EEG=eeg_checkset(EEG)
-    % EEG=pop_saveset(EEG,'moreno_filtradocleanline.set','C:\Users\natyr\OneDrive\Escritorio')
-    % figure(4)
-    % %pwelch(EEG.data(1,:),hanning(1024),[], 2048,256); %señal de entrada, ventana(resolucion espectral o no me acuerdo),no superposiciónd de ventanas,cant de puntos,f muestreo señal
-    % periodogram(EEG.data(1,:),[],1024,256)
-    % 
-    % hold on;
-    % %pwelch(eeg_filt_lp(1,:),hanning(1024),[],2048,256);
-    % periodogram(eeg_filt_lp(1,:),[],1024,256)
-    
+
     %% ICA
     EEG=ICA(EEG); 
-%     try
-%         EEG=ICA(EEG); 
-%         fprintf('Anda ica');
-%     catch ME
-%         fprintf('Error ICA: %s\n', ME.message);
-%     end
-%     
-    %%
+    % guardamos el eeg en el objeto para usar fft luego
+    obj(i).EEG=EEG.data;
     % agrega _f antes del nombre al nuevo archivo filtrado
     aux=strcat('f_',datos(i).name);
     rutafiltrados= fullfile(raizProy,'Filtrados');
@@ -73,19 +50,15 @@ for i=1:N
     outputFile = fullfile(rutafiltrados, aux);
     % Save EEG to BDF format using pop_writeeeg
     try
-        pop_writeeeg(EEG, outputFile, 'TYPE', 'BDF'); 
+        pop_writeeeg(EEG, outputFile, 'TYPE', 'EDF'); 
         fprintf('EEG filtrado guardado con éxito en: %s\n', outputFile);
     catch ME
         fprintf('Error al guardar EEG: %s\n', ME.message);
     end
-    % rutafiltrados= fullfile(raizProy,'Filtrados');
-    % aux=strcat('_f',datos.name)
-    %aux=fullfile(rutafiltrados,datos.name);
-    % EEG=pop_writeeeg(EEG,'filtrados','TYPE','EDF');
-    % pop_writeeeg(EEG)
+    % guardamos la tabla de eventos limpia en el objeto
+    obj(i).tabla_eventos=eventos(EEG);
 
-    %% 
-    aux
-    [pico_amp, snr_valor]=evocados(EEG,40,5)
-   % [pico_amp2, snr_valor2]=evocados(EEG,40,14)
 end
+%%
+% savefile('objetos.mat');
+save('objetos.mat',"obj")

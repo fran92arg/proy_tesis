@@ -1,4 +1,4 @@
-% % function signal=eventos(EEG)
+function tabla_eventos=eventos(EEG)
 % %% --- 1. Parámetros del usuario -------------------------------------------
 % umbral_separacion_s    = 0.5;    % [s] separación máxima entre pulsos de un mismo grupo
 %                                  %     (reales ~195 ms; entre grupos hay >2 s)
@@ -238,7 +238,7 @@ end
 tabla_grupos = table((1:cant_grupos)', t_primer_pulso_grupo_s(:), pulsos_por_grupo(:), ...
     etiqueta_grupo, frecuencia_grupo_Hz, ...
     'VariableNames', {'grupo','t_inicio_s','npulsos','etiqueta','frecuencia_Hz'});
-disp(tabla_grupos)
+% disp(tabla_grupos);
 
 %% --- 5. Tramos de estimulación (lazo for) --------------------------------
 cant_muestras = size(EEG.data, 2);
@@ -268,30 +268,30 @@ for i = 1:cant_tramos
     frecuencia_tramo_Hz(i)    = frecuencia_grupo_Hz(g);
 end
 
-%% --- 6. Gráficos ---------------------------------------------------------
-% 6.1) Pulsos individuales, con la cantidad de pulsos de cada grupo
-figure;
-stem(tiempo_pulsos_s, ones(size(tiempo_pulsos_s)), 'k', 'Marker', 'none'); hold on;
-for g = 1:cant_grupos
-    text(t_primer_pulso_grupo_s(g), 1.1, sprintf('%d', pulsos_por_grupo(g)), ...
-        'HorizontalAlignment', 'left');
-end
-ylim([0 1.4]);
-xlabel('Tiempo (s)'); ylabel('Pulso');
-title('Pulsos y nº de pulsos por grupo');
-
-% 6.2) Tipo de grupo (inicio / frecuencia) en el tiempo
-figure;
-stem(t_primer_pulso_grupo_s, pulsos_por_grupo, 'filled');
-yticks(1:5); yticklabels(etiquetas_grafico); ylim([0 5.5]);
-xlabel('Tiempo (s)'); title('Inicio y frecuencia por grupo'); grid on;
-
-% 6.3) Frecuencia de estimulación en el tiempo (escalones)
-figure;
-stairs(tramos_muestras(:,1) / EEG.srate, frecuencia_tramo_Hz, 'LineWidth', 1.5); hold on;
-plot(tramos_muestras(:,1) / EEG.srate, frecuencia_tramo_Hz, 'ro');
-xlabel('Tiempo (s)'); ylabel('Frecuencia (Hz)');
-title('Frecuencia de estimulación'); grid on;
+% %% --- 6. Gráficos ---------------------------------------------------------
+% % 6.1) Pulsos individuales, con la cantidad de pulsos de cada grupo
+% figure;
+% stem(tiempo_pulsos_s, ones(size(tiempo_pulsos_s)), 'k', 'Marker', 'none'); hold on;
+% for g = 1:cant_grupos
+%     text(t_primer_pulso_grupo_s(g), 1.1, sprintf('%d', pulsos_por_grupo(g)), ...
+%         'HorizontalAlignment', 'left');
+% end
+% ylim([0 1.4]);
+% xlabel('Tiempo (s)'); ylabel('Pulso');
+% title('Pulsos y nº de pulsos por grupo');
+% 
+% % 6.2) Tipo de grupo (inicio / frecuencia) en el tiempo
+% figure;
+% stem(t_primer_pulso_grupo_s, pulsos_por_grupo, 'filled');
+% yticks(1:5); yticklabels(etiquetas_grafico); ylim([0 5.5]);
+% xlabel('Tiempo (s)'); title('Inicio y frecuencia por grupo'); grid on;
+% 
+% % 6.3) Frecuencia de estimulación en el tiempo (escalones)
+% figure;
+% stairs(tramos_muestras(:,1) / EEG.srate, frecuencia_tramo_Hz, 'LineWidth', 1.5); hold on;
+% plot(tramos_muestras(:,1) / EEG.srate, frecuencia_tramo_Hz, 'ro');
+% xlabel('Tiempo (s)'); ylabel('Frecuencia (Hz)');
+% title('Frecuencia de estimulación'); grid on;
 %%
 %% --- Un solo impulso por grupo, con su etiqueta de frecuencia -------------
 cant_muestras = size(EEG.data, 2);                       % 76800
@@ -322,10 +322,10 @@ tabla_eventos = table((1:cant_grupos)', muestra_evento, t_evento_grupo_s(:), ...
     'VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
 disp(tabla_eventos);
 %plot(EEG.times,tabla_eventos.frecuencia_Hz);
-plot(t_evento_grupo_s, frecuencia_grupo_Hz, 'o'); hold on;
-stairs(t_evento_grupo_s, frecuencia_grupo_Hz);
-figure(2);
-stem(tabla_eventos.tiempo_s,tabla_eventos.frecuencia_Hz);
+% plot(t_evento_grupo_s, frecuencia_grupo_Hz, 'o'); hold on;
+% stairs(t_evento_grupo_s, frecuencia_grupo_Hz);
+% figure(2);
+% stem(tabla_eventos.tiempo_s,tabla_eventos.frecuencia_Hz);
 %%
 L=length(EEG.times);
 eventos_largo=zeros(1,L);
@@ -336,13 +336,13 @@ eventos_largo=zeros(1,L);
 %          k=k+1;
 %     end
 %end
-eventos_largo(tabla_eventos.muestra)=tabla_eventos.frecuencia_Hz;
-
-hola=reshape(eventos_largo,[1024,76800/1024]);
-reseeg=reshape(EEG.times,[1024,76800/1024]);
-for i=31:33
-    figure(i);
-    stem(reseeg(:,i),hola(:,i));
+% eventos_largo(tabla_eventos.muestra)=tabla_eventos.frecuencia_Hz;
+% 
+% hola=reshape(eventos_largo,[1024,76800/1024]);
+% reseeg=reshape(EEG.times,[1024,76800/1024]);
+% for i=31:33
+%     figure(i);
+%     stem(reseeg(:,i),hola(:,i));
+% end
 end
-
 %resta=tabla_eventos.muestra(i)
