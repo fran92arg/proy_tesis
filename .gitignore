@@ -3,5 +3,6 @@
 eeglab2026.1.0/
 eeglab_old/
 eeglab2026.1.0/
-data/
+Filtrados/
 
+*.asv
