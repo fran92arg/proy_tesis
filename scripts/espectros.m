@@ -1,10 +1,12 @@
 %function estructura=espectros(EEG,tabla_event)
 % recibe el eeg filtrado y la tabla con los eventos
 % 20 eventos-> 20 filas, 10*256 columnas
-cant_eventos=height(obj(1).tabla_eventos)-1;   %20 eventos de estimulacion, el primero se descarta
+nob=2;  %numero de objeto
+cant_eventos=height(obj(nob).tabla_eventos)-1;   %20 eventos de estimulacion, el primero se descarta
 duracion_ventana=10*EEG.srate; %10 segundos con fs=256 Hz
 
-canal_interes=[4 5 13 14 21];  %[P3 O1 P4 O2 Pz]
+canal_interes=[4 5 13 14 21];
+canal={'P3','O1','P4','O2','Pz'};
 cant_canales=length(canal_interes);
 %%
 matriz_EEG = zeros(cant_eventos,duracion_ventana,cant_canales);
@@ -15,7 +17,7 @@ matriz_EEG = zeros(cant_eventos,duracion_ventana,cant_canales);
 % [P3 O1 P4 O2 Pz]
 for k=1:cant_canales
     for i=1:cant_eventos %2:eventos-1
-        matriz_EEG(i,:,k)=EEG.data(canal_interes(k),obj(1).tabla_eventos.muestra(i+1):obj(1).tabla_eventos.muestra(i+1)+duracion_ventana-1);
+        matriz_EEG(i,:,k)=EEG.data(canal_interes(k),obj(nob).tabla_eventos.muestra(i+1):obj(nob).tabla_eventos.muestra(i+1)+duracion_ventana-1);
     end
 end
 %% calculo de FFT
@@ -29,7 +31,7 @@ n_ventanas = floor(duracion_ventana/N_puntos_2seg);                % 5 ventanas 
 
 % Separar en ventanas: [nEv x N x nWin x nCh]
 Xw = reshape(matriz_EEG(:, 1:n_ventanas*N_puntos_2seg, :), cant_eventos, N_puntos_2seg, n_ventanas, cant_canales);
-
+% reshape(X,[M,N,P,...])
 Y  = fft(Xw, [], 2);                  % FFT sobre la dimensión 2
 P2 = abs(Y/N_puntos_2seg);
 P1 = P2(:, 1:N_puntos_2seg/2+1, :, :);
@@ -39,12 +41,40 @@ f  = Fs*(0:(N_puntos_2seg/2))/N_puntos_2seg;                  % 0 a 128 Hz, paso
 
 % Promedio de las 5 ventanas: [nEv x 257 x nCh]
 matriz_fft = reshape(mean(P1, 3), cant_eventos, N_puntos_2seg/2+1, cant_canales);
-figure;
-% matriz_fft(i, :, c) es el espectro de amplitud (promediado sobre las 5 ventanas) del evento i, canal c, 
-% con el eje de frecuencias f de 0 a 128 Hz en pasos de 0.5 Hz.
-plot(f, squeeze(matriz_fft(4,:,3)));
-xlabel('Frecuencia (Hz)'); ylabel('Amplitud');
-grid on;
+% [fila,indice,valor]=zeros(20);
+% for k=1:cant_canales
+%     for i=1:cant_eventos %2:eventos-1
+%         matriz_EEG(i,:,k)=EEG.data(canal_interes(k),obj(nob).tabla_eventos.muestra(i+1):obj(nob).tabla_eventos.muestra(i+1)+duracion_ventana-1);
+%     end
+% end
+%
+% 
+etiquetas = {'P3','O1','P4','O2','Pz'};
 
+fe = obj(nob).tabla_eventos.frecuencia_Hz(2:end);
+[~, indice] = min(abs(f(:).' - fe), [], 2);
+
+obj(nob).tabla_eventos.ind_frec = [nan; indice];
+
+for k = 1:cant_canales
+    valor = zeros(cant_eventos, 1);
+    for i = 1:cant_eventos
+        valor(i) = matriz_fft(i, indice(i), k);
+    end
+    obj(nob).tabla_eventos.(['amp_' etiquetas{k}]) = [nan; valor];
+end
+obj(nob).tabla_eventos(1,:)=[];
+% figure(2);
+% % matriz_fft(i, :, c) es el espectro de amplitud (promediado sobre las 5 ventanas) del evento i, canal c, 
+% % con el eje de frecuencias f de 0 a 128 Hz en pasos de 0.5 Hz.
+% % canal_interes=[4 5 13 14 21];  %[P3 O1 P4 O2 Pz]
+% evento=11;
+% canal=2;
+% plot(f, squeeze(matriz_fft(evento,:,canal)),'b');
+% xlabel('Frecuencia (Hz)'); ylabel('Amplitud');
+% legend(obj(nob).nombre)
+% grid on;
+% hold on
+% % title('Evento ',num2str(evento))
 
 % %end
