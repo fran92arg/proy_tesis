@@ -19,11 +19,11 @@ datos = dir(fullfile(rutaData, '*.edf')); % con esto cargo los nombres de los .e
 % en una estructura
 cant_archivos=length(datos);
 %%
-obj(cant_archivos)=pevocado;
+paciente(cant_archivos)=pevocado;
 %N=1;
 %% Cargar los .edf
 for i=1:cant_archivos
-    obj(i).nombre=datos(i).name(1:end-4);
+    paciente(i).nombre=datos(i).name(1:end-4);
     aux=strcat(rutaData,'\');
     aux=strcat(aux,datos(i).name);
     EEG = pop_biosig(aux);
@@ -42,7 +42,7 @@ for i=1:cant_archivos
     %% ICA
     EEG=ICA(EEG); 
     % guardamos el eeg en el objeto para usar fft luego
-    obj(i).EEG=EEG.data;
+%     obj(i).EEG=EEG.data;
     % agrega _f antes del nombre al nuevo archivo filtrado
     aux=strcat('f_',datos(i).name);
     rutafiltrados= fullfile(raizProy,'Filtrados');
@@ -56,9 +56,11 @@ for i=1:cant_archivos
         fprintf('Error al guardar EEG: %s\n', ME.message);
     end
     % guardamos la tabla de eventos limpia en el objeto
-    obj(i).tabla_eventos=eventos(EEG);
+    paciente(i).tabla_eventos=eventos(EEG);
+    % tabla de eventos nueva y matriz fft
+    paciente(i)=espectros(paciente(i),EEG);
 
 end
 %%
 % savefile('objetos.mat');
-save('objetos.mat',"obj")
+save('objetos.mat',"paciente")
