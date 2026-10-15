@@ -65,6 +65,7 @@ for k = 1:cant_canales
     obj.tabla_eventos.(['amp_' etiquetas{k}]) = [nan; valor];
 end
 obj.tabla_eventos(1,:)=[];
+obj.matriz_tf=matriz_fft;
 % figure(2);
 % % matriz_fft(i, :, c) es el espectro de amplitud (promediado sobre las 5 ventanas) del evento i, canal c, 
 % % con el eje de frecuencias f de 0 a 128 Hz en pasos de 0.5 Hz.

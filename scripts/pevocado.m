@@ -1,8 +1,9 @@
 classdef pevocado<handle
    properties
+       canal={'P3','O1','P4','O2','Pz'};
        nombre=[];
        % eeg filtrado
-       EEG;%=double(zeros(size(EEG.data)))
+%        EEG;%=double(zeros(size(EEG.data)))
        tabla_eventos=table;%('VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
        matriz_tf;
    end

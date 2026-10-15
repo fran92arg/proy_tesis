@@ -42,7 +42,7 @@ for i=1:cant_archivos
     %% ICA
     EEG=ICA(EEG); 
     % guardamos el eeg en el objeto para usar fft luego
-    obj(i).EEG=EEG.data;
+    % obj(i).EEG=EEG.data;
     % agrega _f antes del nombre al nuevo archivo filtrado
     aux=strcat('f_',datos(i).name);
     rutafiltrados= fullfile(raizProy,'Filtrados');
