@@ -7,7 +7,7 @@ cant_eventos=height(obj.tabla_eventos)-1;   %20 eventos de estimulacion, el prim
 duracion_ventana=10*EEG1.srate; %10 segundos con fs=256 Hz
 
 canal_interes=[4 5 13 14 21];
-canal={'P3','O1','P4','O2','Pz'};
+
 cant_canales=length(canal_interes);
 %%
 matriz_EEG = zeros(cant_eventos,duracion_ventana,cant_canales);

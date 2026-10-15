@@ -56,9 +56,9 @@ for i=1:cant_archivos
         fprintf('Error al guardar EEG: %s\n', ME.message);
     end
     % guardamos la tabla de eventos limpia en el objeto
-   eventos(EEG,obj(i));
-   espectros(EEG,obj(i));
-
+    eventos(EEG,obj(i));
+    espectros(EEG,obj(i));
+    snr_total(obj(i));
 end
 %%
 % savefile('objetos.mat');
