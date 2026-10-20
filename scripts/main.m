@@ -22,7 +22,7 @@ cant_archivos=length(datos);
 obj(cant_archivos)=pevocado;
 %N=1;
 %% Cargar los .edf
-for i=1:cant_archivos
+for i=1:1
     obj(i).nombre=datos(i).name(1:end-4);
     aux=strcat(rutaData,'\');
     aux=strcat(aux,datos(i).name);
@@ -57,8 +57,8 @@ for i=1:cant_archivos
     end
     % guardamos la tabla de eventos limpia en el objeto
     eventos(EEG,obj(i));
-    espectros(EEG,obj(i));
-    snr_total(obj(i));
+%     espectros(EEG,obj(i));
+%     snr_total(obj(i));
 end
 %%
 % savefile('objetos.mat');

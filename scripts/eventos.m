@@ -317,8 +317,11 @@ for g = 1:cant_grupos
 end
 
 % Tabla que conserva la etiqueta de texto de cada evento
-obj.tabla_eventos = table((1:cant_grupos)', muestra_evento, t_evento_grupo_s(:), ...
-    pulsos_por_grupo(:), etiqueta_grupo, frecuencia_grupo_Hz, ...
+% obj.tabla_eventos = table((2:cant_grupos)', muestra_evento, t_evento_grupo_s(:), ...
+%     pulsos_por_grupo(:), etiqueta_grupo, frecuencia_grupo_Hz, ...
+%     'VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
+obj.tabla_eventos = table((1:cant_grupos-1)', muestra_evento(2:end), t_evento_grupo_s(2:end)', ...
+    pulsos_por_grupo(2:end)', etiqueta_grupo(2:end), frecuencia_grupo_Hz(2:end), ...
     'VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
 disp(obj.tabla_eventos);
 % plot(EEG.times,tabla_eventos.frecuencia_Hz);
@@ -327,8 +330,8 @@ disp(obj.tabla_eventos);
 % figure(2);
 % stem(tabla_eventos.tiempo_s,tabla_eventos.frecuencia_Hz);
 %%
-L=length(EEG.times);
-eventos_largo=zeros(1,L);
+% L=length(EEG.times);
+% eventos_largo=zeros(1,L);
 % k=1;
 % for i=8326:L
 %     if i==tabla_eventos.muestra(k)
