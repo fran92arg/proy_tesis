@@ -321,7 +321,7 @@ obj.tabla_eventos = table((1:cant_grupos)', muestra_evento, t_evento_grupo_s(:),
     pulsos_por_grupo(:), etiqueta_grupo, frecuencia_grupo_Hz, ...
     'VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
 disp(obj.tabla_eventos);
-%plot(EEG.times,tabla_eventos.frecuencia_Hz);
+% plot(EEG.times,tabla_eventos.frecuencia_Hz);
 % plot(t_evento_grupo_s, frecuencia_grupo_Hz, 'o'); hold on;
 % stairs(t_evento_grupo_s, frecuencia_grupo_Hz);
 % figure(2);
