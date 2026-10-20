@@ -1,4 +1,4 @@
-function tabla_eventos=eventos(EEG)
+function eventos(EEG, obj)
 % %% --- 1. Parámetros del usuario -------------------------------------------
 % umbral_separacion_s    = 0.5;    % [s] separación máxima entre pulsos de un mismo grupo
 %                                  %     (reales ~195 ms; entre grupos hay >2 s)
@@ -317,11 +317,11 @@ for g = 1:cant_grupos
 end
 
 % Tabla que conserva la etiqueta de texto de cada evento
-tabla_eventos = table((1:cant_grupos)', muestra_evento, t_evento_grupo_s(:), ...
+obj.tabla_eventos = table((1:cant_grupos)', muestra_evento, t_evento_grupo_s(:), ...
     pulsos_por_grupo(:), etiqueta_grupo, frecuencia_grupo_Hz, ...
     'VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
-disp(tabla_eventos);
-%plot(EEG.times,tabla_eventos.frecuencia_Hz);
+disp(obj.tabla_eventos);
+% plot(EEG.times,tabla_eventos.frecuencia_Hz);
 % plot(t_evento_grupo_s, frecuencia_grupo_Hz, 'o'); hold on;
 % stairs(t_evento_grupo_s, frecuencia_grupo_Hz);
 % figure(2);

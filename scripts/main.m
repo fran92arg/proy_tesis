@@ -42,7 +42,7 @@ for i=1:cant_archivos
     %% ICA
     EEG=ICA(EEG); 
     % guardamos el eeg en el objeto para usar fft luego
-    obj(i).EEG=EEG.data;
+    % obj(i).EEG=EEG.data;
     % agrega _f antes del nombre al nuevo archivo filtrado
     aux=strcat('f_',datos(i).name);
     rutafiltrados= fullfile(raizProy,'Filtrados');
@@ -56,9 +56,10 @@ for i=1:cant_archivos
         fprintf('Error al guardar EEG: %s\n', ME.message);
     end
     % guardamos la tabla de eventos limpia en el objeto
-    obj(i).tabla_eventos=eventos(EEG);
-
+    eventos(EEG,obj(i));
+    espectros(EEG,obj(i));
+    snr_total(obj(i));
 end
 %%
 % savefile('objetos.mat');
-save('objetos.mat',"obj")
+% save('objetos.mat',"obj")
