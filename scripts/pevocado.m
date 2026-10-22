@@ -6,6 +6,7 @@ classdef pevocado<handle
        EEG;%=double(zeros(size(EEG.data)))
        tabla_eventos=table;%('VariableNames', {'grupo','muestra','tiempo_s','npulsos','etiqueta','frecuencia_Hz'});
        matriz_tf;
+       frec;
    end
    methods
 %        function e=espectro(tipo)
