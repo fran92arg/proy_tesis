@@ -1,6 +1,7 @@
 classdef pevocado<handle
    properties
        canal={'P3','O1','P4','O2','Pz'};
+       DC;
        nombre=[];
        % eeg filtrado
        EEG;%=double(zeros(size(EEG.data)))
