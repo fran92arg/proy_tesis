@@ -58,7 +58,7 @@ for i=1:1
     % guardamos la tabla de eventos limpia en el objeto
     eventos(EEG,obj(i));
     espectros(EEG,obj(i));
-%     snr_total(obj(i));
+    snr_total(obj(i));
 end
 %%
 % savefile('objetos.mat');
