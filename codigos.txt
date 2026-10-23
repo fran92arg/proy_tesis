@@ -1,0 +1,23 @@
+LEO01061951001	Ramos M leonel	0.5
+JUA01011966002	Gimenez Juan	0
+FAB01011966003	Gimenez Fabio	0.5
+ORL20041952004	Bustos Orlando	0.5
+CRI29111944005	Halac Cristina	0.5
+MAT30091945006	Adler Matilde	0.5
+MIR06051962007	Aguilera Mirta
+MAR08091953008	Cuello María Cristina	1
+DAN04111953009	Cardozo Daniel	1
+LUI24111954010	Pou Luis	0
+LEO20021956011	Tissera leonardo	0.5
+MAR27101959012	Colazo Marta	0.5
+EDU26021963013	Visconti Eduardo	0
+RAF24041962014	Mendez Rafael	0
+LOI09081952015	Ortigosa Loida	0.5
+PED26051951016	Rodriguez Pedro Victor	0.5
+LUI14071945017	Moreno Luis	1
+ELS28101943018	Pittaro Elsa	0
+ANG31051965019	Urdapilleta Angela	0.5
+JOS04121955020	Unterholzner José Luis	
+OLG13111951021	Ríos Olga Beatriz	0.5
+LAU31081954022	Martinez Laura del valle	0.5
+BET12121963023	Gurreonero Betty
