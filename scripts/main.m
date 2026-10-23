@@ -22,7 +22,7 @@ cant_archivos=length(datos);
 obj(cant_archivos)=pevocado;
 %N=1;
 %% Cargar los .edf
-for i=1:1
+for i=1:cant_archivos
     obj(i).nombre=datos(i).name(1:end-4);
     aux=strcat(rutaData,'\');
     aux=strcat(aux,datos(i).name);
@@ -62,4 +62,4 @@ for i=1:1
 end
 %%
 % savefile('objetos.mat');
-% save('objetos.mat',"obj")
+save('objetos.mat',"obj")
