@@ -62,4 +62,4 @@ for i=1:cant_archivos
 end
 %%
 % savefile('objetos.mat');
-% save('objetos.mat',"obj")
+save('objetos.mat',"obj")
